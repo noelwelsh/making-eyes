@@ -1,31 +1,122 @@
-# Making Eyes At BlueEyes
+# Making Web Services with BlueEyes
 
-[BlueEyes](https://github.com/jdegoes/blueeyes) is a simple web framework for Scala. It provides
+[BlueEyes](https://github.com/jdegoes/blueeyes) is a simple web framework for Scala, aimed at producing high-performance REST services. BlueEyes differs from most Scala web frameworks by:
 
-   - Easy construction of REST services
-   - Asynchronous, and thus highly scalable, processing by default
+  - building on top of [Netty](http://www.jboss.org/netty), providing highly scalable services out of the box
+  - using an asynchronous model throughout, further enabling high scalability
+  - deploying as simple command line executables -- not need to configure and manage servlet containers
+  - leveraging Scala's type system and avoiding reflection
+  - focusing exclusively on REST services
 
+This short book describes how to build scalable web services with BlueEyes.
 
-## Building a Service
+## Core Concepts and a Quick Introduction
 
-The simplest way to construct a REST service is to extend `blueeyes.BlueEyesServiceBuilder`:
+The *Service* is the core concept in BlueEyes. At it's heart a service is a set of related *request handlers*. A request handler is just a function, bound to a URL, from a HTTP request to a HTTP responsse.
+
+Typically a service needs some configuration parameters (for example, the database to use), and will need to create (and later destroy) some resources, such as a connection to the database, before it runs. In BlueEyes the configuration parameters are called the service's *context*, and the request handlers plus their startup and shutdown functions are called a *service descriptor*.
+
+Let's look at how to build a very simple service in BlueEyes.
+
+### Building a Service
+
+The simplest way to construct a REST service is to extend `blueeyes.BlueEyesServiceBuilder` and call the `service` function:
 
 {% highlight scala %}
 import blueeyes.BlueEyesServiceBuilder
 
 trait MyService extends BlueEyesServiceBuilder {
-  ...
+  val myService = service("name", "version") {
+    ... // service descriptor goes here
+  }
 }
 {% endhighlight %}
 
 ### Service
 
-The `service` function takes a `name`, `version`, and a function from a context to a service descriptor.
+The `service` function takes a `name`, `version`, and a function from a context to a service descriptor. The `name` and the `version` are strings. The name can be anything you want, while the version number should be a version number like `"1.0.0"`:
 
-### Startup
+{% highlight scala %}
+import blueeyes.BlueEyesServiceBuilder
 
-Startup returns a `Future`, which is complete when startup has finished. There is an implicit `.future` to convert any value to a future.
+trait MyService extends BlueEyesServiceBuilder {
+  val myService = service("myService", "1.0.0") {
+    context => // service descriptor
+  }
+}
+{% endhighlight %}
 
+
+### The Service Descriptor
+
+The service descriptor is created by chaining together functions to handle `startup`, `requests`, and `shutdown`:
+
+{% highlight scala %}
+import blueeyes.BlueEyesServiceBuilder
+
+trait MyService extends BlueEyesServiceBuilder {
+  val myService = service("myService", "1.0.0") {
+    context => 
+      startup {
+        // Create resources
+      } ->
+      request {
+        // Handle requests
+      } ->
+      shutdown {
+        // Destroy resources
+      }
+  }
+}
+{% endhighlight %}
+
+
+### Startup and Shutdown
+
+We pass to `startup` a function that will create any resources we need. This function must return a `Future`. If you're not familiar with futures, they're an abstraction for handling concurrency. This is the first hint at how pervasively BlueEyes has adopted a high performance approach. We'll talk about futures in detail later. For now, all you need to know is that there is an implicit `.future` to convert any value to a future of that value.
+
+The simplest startup function does nothing:
+
+{% highlight scala %}
+startup {
+  ().future
+}
+{% endhighlight %}
+
+The `shutdown` function is similar, except it takes a function from a configuration (of the same type as the value return by the startup function) to a future. Since we haven't done anything in our startup we don't need to do anything in our shutdown:
+
+{% highlight scala %}
+shutdown { config =>
+  ().future
+}
+{% endhighlight %}
+
+Our code currently looks like:
+
+{% highlight scala %}
+import blueeyes.BlueEyesServiceBuilder
+
+trait MyService extends BlueEyesServiceBuilder {
+  val myService = service("myService", "1.0.0") {
+    context => 
+      startup {
+        ().future
+      } ->
+      request {
+        // Handle requests
+      } ->
+      shutdown { config =>
+        ().future
+      }
+  }
+}
+{% endhighlight %}
+
+Now we just need to write some request handlers and we're done!
+
+### Request
+
+Like `startup` and `shutdown`, we pass to a `request` a function, this time from our configuration (as returned by `startup`) to our request handlers.
 
 ## Configuration
 
