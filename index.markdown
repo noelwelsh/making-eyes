@@ -116,7 +116,16 @@ Now we just need to write some request handlers and we're done!
 
 ### Request
 
-Like `startup` and `shutdown`, we pass to a `request` a function, this time from our configuration (as returned by `startup`) to our request handlers.
+Like `startup` and `shutdown`, we pass to a `request` a function, this time from our configuration (as returned by `startup`) to our request handlers. Request handlers are *partial functions* from `HttpRequest` to a future of `HttpResponse`.  Being partial functions, a request handler can decide whether or not it handles a given URL. BlueEyes provides a number of combinators from which we can build request handlers. For example, the `path` combinator can be used to match the path of a URL:
+
+{% highlight scala %}
+request { config =>
+  path("/foo/bar") {
+    // Do something
+  }
+}
+{% endhighlight %}
+
 
 ## Configuration
 
