@@ -3,9 +3,10 @@ layout: page
 title: Making Web Services with BlueEyes
 ---
 
-[BlueEyes](https://github.com/jdegoes/blueeyes) is a simple web framework for Scala, aimed at producing high-performance REST services. BlueEyes differs from most Scala web frameworks by:
+[BlueEyes](https://github.com/jdegoes/blueeyes) is a simple Scala web framework for building high-performance REST services. BlueEyes differs from most Scala web frameworks by:
 
-- using an asynchronous model throughout, starting with [Netty](http://www.jboss.org/netty) rather than a servlet container.
+- using an asynchronous model throughout, which enables high throughput and scalability
+- running on [Netty](http://www.jboss.org/netty), rather than a servlet container, as part of the commitment to an asynchronous model.
 - leveraging Scala's type system and avoiding reflection.
 - focusing exclusively on REST services.
 

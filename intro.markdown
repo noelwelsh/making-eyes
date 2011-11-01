@@ -259,57 +259,17 @@ trait CalculatorService extends BlueEyesServiceBuilder {
 A *server* is the software process that runs one or more services. To actually execute our calculator service we must build a server to run it. BlueEyes makes this very simple: simply extend the `BlueEyesServer` trait and mix in the traits defining the service:
 
 {% highlight scala %}
+import BlueEyes.BlueEyesServer
+
 object CalculatorServer extends BlueEyesServer with CalculatorService
 {% endhighlight %}
 
 A server has `start` and `stop` methods, and a `main` method. By default the `main` method takes a `--configFile` command line option, specifying a file containing configuration parameters. Since our service has no configuration you can simply create an empty file and pass that on the command line.
 
+## Next Steps
 
-## Configuration
+We've build a complete service, showing the basic elements of using BlueEyes. The complete code for this example service is available [on Github](https://github.com/noelwelsh/calculator-service)
 
-Configuation is done via the context passed to service. This context (an instance of  `blueeyes.core.service.HttpServiceContext`) has a attribute called `config` which is an instance of a [Configgy](https://github.com/robey/configgy) `ConfigMap`.
-
-You can pass in a `--configFile` option on the command line, or construct a `ConfigMap` in code:
-
-{% highlight scala %}
-import net.lag.configgy.Configgy
-
-Configgy.configure("/etc/my-service.conf")
-val config = Configgy.config
-{% endhighlight %}
-
-
-## HTTP Pattern Matching
-
-Pattern matching on HTTP requests is done using the functions defined in `blueeyes.core.service.HttpRequestHandlerCombinators`. `BlueEyesServiceBuilder` extends `HttpRequestHandlerCombinators`.
-
-### contentType
-
-This combinator specifies that the service consumes *and* produces content of the given MIME type. Many common MIME types are bound to values, so you can write just, say, `application/json` rather than constructing a `MimeType` object yourself.
-
-To access these import `blueeyes.core.http.MimeTypes._`
-
-
-### Request Methods
-
-The common HTTP request methods `get`, `post`, `put`, and `head`, as well as less common (nonstandard?) methods `delete`, `patch`, `options`, `trace`, and `connect` are specified as combinators.
-
-
-## Mongo Integration
-
-Extend the `ConfigurableMongo` trait from `blueeyes.persistence.mongo`. Then in the  `startup` method, extract the mongo configuration from your configuration and pass it to the `mongo` function to construct a facade through which you can access Mongo.
-
-{% highlight scala %}
-service { context =>
-  startup {
-    val mongoConfig = context.config.configMap("mongo")
-    // In real code you'd put mongoConfig into some data structure you can access from request
-    mongoConfig
-   } ->
-   ...
-}
-{% endhighlight %}
-
-The configuration elements are `mongo.mock`, a boolean indicating if a mock or real Mongo should be used, and `dropBeforeStart`, which is a map specifying databases to drop.
+Of course there is a lot more to BlueEyes. The later chapters go into more depth on building services, as well as covering areas such as testing and persistence that we haven't touched on here.
 
 
