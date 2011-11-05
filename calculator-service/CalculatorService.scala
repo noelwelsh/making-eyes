@@ -1,0 +1,50 @@
+import blueeyes.BlueEyesServiceBuilder
+import blueeyes.core.http.{HttpRequest, HttpResponse, HttpStatus}
+import blueeyes.core.http.HttpStatusCodes._
+import blueeyes.core.data.{ByteChunk, BijectionsChunkString}
+
+trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkString {
+  val calculatorService = service("calculatorService", "1.0.0") {
+    context => 
+      startup {
+        ().future
+      } ->
+      request {
+        path("/add" / 'number1 / 'number2) { 
+          parameter('number1) { number1 =>
+            parameter('number2) { number2 => 
+              request: HttpRequest[ByteChunk] =>
+                try {
+                  val n1 = number1.toDouble
+                  val n2 = number2.toDouble
+                  val sum = n1 + n2
+                  
+                  HttpResponse[ByteChunk](content = Some(sum.toString)).future
+                } catch {
+                  case e: NumberFormatException => HttpResponse[ByteChunk](status = HttpStatus(BadRequest)).future  
+                }
+           }
+         }
+        } ~
+        path("/multiply" / 'number1 / 'number2) {
+          parameter('number1) { number1 =>
+            parameter('number2) { number2 =>
+              request: HttpRequest[ByteChunk] =>
+                try {
+                  val n1 = number1.toDouble
+                  val n2 = number2.toDouble
+                  val product = n1 * n2
+                
+                  HttpResponse[ByteChunk](content = Some(product.toString)).future
+                } catch {
+                  case e: NumberFormatException => HttpResponse[ByteChunk](status = HttpStatus(BadRequest)).future
+                }
+           }
+         }
+        }
+      } ->
+      shutdown { config =>
+        ().future
+      }
+  }
+}

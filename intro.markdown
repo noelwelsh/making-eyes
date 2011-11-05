@@ -268,7 +268,7 @@ A server has `start` and `stop` methods, and a `main` method. By default the `ma
 
 ## Next Steps
 
-We've build a complete service, showing the basic elements of using BlueEyes. The complete code for this example service is available [on Github](https://github.com/noelwelsh/calculator-service)
+We've build a complete service, showing the basic elements of using BlueEyes. The complete code for this example service is available [here](calculator-service)
 
 Of course there is a lot more to BlueEyes. The later chapters go into more depth on building services, as well as covering areas such as testing and persistence that we haven't touched on here.
 
