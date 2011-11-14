@@ -162,18 +162,28 @@ path("/add" / 'number1 / 'number2) {
         val n2 = number2.toDouble
         val sum = n1 + n2
         
-        HttpResponse[String](content = Some(sum.toString)).future
+        HttpResponse[ByteChunk](content = Some(sum.toString)).future
       } catch {
-          case e: NumberFormatException => HttpResponse[String](status = HttpStatus(BadRequest)).future
+          case e: NumberFormatException => HttpResponse[ByteChunk](status = HttpStatus(BadRequest)).future
       }
    }
  }
 }
 {% endhighlight %}
 
-A few things to note about the code above. Firstly, the `HttpResponse` constructor allows us to specify the status code, headers, content, and HTTP version, but has sensible default arguments. If we write just `HttpResponse[String]()` we get an empty response with a 200 (OK) status.
+A few things to note about the code above. Firstly, the `HttpResponse` constructor allows us to specify the status code, headers, content, and HTTP version, but has sensible default arguments. If we write just `HttpResponse[ByteChunk]()` we get an empty response with a 200 (OK) status.
 
-Notice also the type, `String`, we parameterise `HttpResponse` by. This specifies how the content, in our case the sum, is encoded. The basic content type is `ByteChunk`. As the name suggests this represents chunks of bytes, which are essentially a lazy list of byte arrays. BlueEyes understands other content types, such as `String` which we used above, and `JValue` which is used to represent JSON data. All data must eventually be converted to `ByteChunk`s, so BlueEyes has a number of *bijections* for converting data. We'll discuss bijections further in a later part.
+Notice also the type, `ByteChunk`, we parameterise `HttpResponse` by. This specifies how the content, in our case the sum, is encoded. The basic content type is `ByteChunk`. As the name suggests this represents chunks of bytes, which are essentially a lazy list of byte arrays. BlueEyes understands other content types, such as `JValue` which is used to represent JSON data. 
+
+Note that the content we set in the `HttpResponse` is a `String`, not a `ByteChunk`. All data must eventually be converted to `ByteChunk`s, so BlueEyes has a number of *bijections* for converting data. By mixing `blueeyes.core.data.BijectionsChunkString` into our service, we make available an implicit bijection between `String` and `ByteChunk`. Thus we can set the content to a `String` and the bijection will implicitly convert it to a `ByteChunk`. That is, we alter the definition of `CalculatorService` to be:
+
+{% highlight scala %}
+import blueeyes.core.data.{ByteChunk, BijectionsChunkString}
+
+trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkString {
+  ...
+}
+{% endhighlight %}
 
 Finally notice we called the `future` method on our responses. Remember request handlers return futures of responses, so it is necessary to perform this conversion.
 
@@ -193,9 +203,9 @@ path("/multiply" / 'number1 / 'number2) {
         val n2 = number2.toDouble
         val product = n1 * n2
         
-        HttpResponse[String](content = Some(product.toString)).future
+        HttpResponse[ByteChunk](content = Some(product.toString)).future
       } catch {
-          case e: NumberFormatException => HttpResponse[String](status = HttpStatus(BadRequest)).future
+          case e: NumberFormatException => HttpResponse[ByteChunk](status = HttpStatus(BadRequest)).future
       }
    }
  }
@@ -208,8 +218,11 @@ The complete code for the calculator service is:
 
 {% highlight scala %}
 import blueeyes.BlueEyesServiceBuilder
+import blueeyes.core.http.{HttpRequest, HttpResponse, HttpStatus}
+import blueeyes.core.http.HttpStatusCodes._
+import blueeyes.core.data.{ByteChunk, BijectionsChunkString}
 
-trait CalculatorService extends BlueEyesServiceBuilder {
+trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkString {
   val calculatorService = service("calculatorService", "1.0.0") {
     context => 
       startup {
@@ -218,31 +231,33 @@ trait CalculatorService extends BlueEyesServiceBuilder {
       request {
         path("/add" / 'number1 / 'number2) { 
           parameter('number1) { number1 =>
-            parameter('number2) { number2 =>
-              try {
-                val n1 = number1.toDouble
-                val n2 = number2.toDouble
-                val sum = n1 + n2
-          
-                HttpResponse[String](content = Some(sum.toString)).future
-              } catch {
-                  case e: NumberFormatException => HttpResponse[String](status =   HttpStatus(BadRequest)).future  
-              }
+            parameter('number2) { number2 => 
+              request: HttpRequest[ByteChunk] =>
+                try {
+                  val n1 = number1.toDouble
+                  val n2 = number2.toDouble
+                  val sum = n1 + n2
+                  
+                  HttpResponse[ByteChunk](content = Some(sum.toString)).future
+                } catch {
+                  case e: NumberFormatException => HttpResponse[ByteChunk](status = HttpStatus(BadRequest)).future  
+                }
            }
          }
         } ~
         path("/multiply" / 'number1 / 'number2) {
           parameter('number1) { number1 =>
             parameter('number2) { number2 =>
-              try {
-                val n1 = number1.toDouble
-                val n2 = number2.toDouble
-                val product = n1 * n2
+              request: HttpRequest[ByteChunk] =>
+                try {
+                  val n1 = number1.toDouble
+                  val n2 = number2.toDouble
+                  val product = n1 * n2
                 
-                HttpResponse[String](content = Some(product.toString)).future
-              } catch {
-                  case e: NumberFormatException => HttpResponse[String](status = HttpStatus(BadRequest)).future
-              }
+                  HttpResponse[ByteChunk](content = Some(product.toString)).future
+                } catch {
+                  case e: NumberFormatException => HttpResponse[ByteChunk](status = HttpStatus(BadRequest)).future
+                }
            }
          }
         }
@@ -250,7 +265,7 @@ trait CalculatorService extends BlueEyesServiceBuilder {
       shutdown { config =>
         ().future
       }
- }
+  }
 }
 {% endhighlight %}
 
