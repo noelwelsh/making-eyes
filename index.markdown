@@ -15,7 +15,7 @@ This short book describes how to build scalable web services with BlueEyes.
 ## Table of Contents
 
 - [A quick introduction to BlueEyes](intro.html), in which we build a basic web service.
-- More on services
+- [More on services](services.html)
    - Bijections and content types
    - Request parsing combinators
    - HttpRequestHandler types
@@ -26,6 +26,7 @@ This short book describes how to build scalable web services with BlueEyes.
    - Extracting elements from JSON
    - JSON data type representation
 - Mongo integration
+- Comet
 - Http Client
 - Testing
 - Deployment
