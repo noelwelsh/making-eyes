@@ -5,3 +5,40 @@
   - Request parsing combinators
   - The HttpRequestHandler types
   - Bijections
+* Running Services
+ - Configuration
+   - Config file format
+   - Server configuration block
+   - Service configuration block
+   - Accessing configuration information
+ - One Jar deployment
+   - One Jar SBT plugin
+   - rsync
+* BlueEyes Concurrency Model
+  - Future
+    - Methods on future
+    - Creating futures
+      - sync and async
+  - Actors
+* Consuming Services
+  - HttpClient
+    - Instantiating
+    - Methods
+  - ConfigurableHttpClient
+* Testing
+  - BlueEyesServiceSpecification
+  - A quick intro to Specs
+  - Specifying configuration
+  - Connecting to your service
+  - Checking futurs
+* Mongo
+* JSON
+* Streaming Requests and Responses and Comet
+  - Inside ByteChunk
+    A stream of bytes
+* Deployment
+  - Service augmentation
+    - Logging
+    - HealthMonitor
+    - Interactive discovery
+  - HAProxy
