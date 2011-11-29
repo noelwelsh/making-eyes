@@ -5,7 +5,7 @@
   - Fix sizing of content
 * TODO Introduction`
   - Tests for calculator app
-* TODO Building Request Handlers
+* Building Request Handlers
   + Request parsing combinators
   + The HttpRequestHandler types
   + Bijections
@@ -29,12 +29,11 @@
     - Instantiating
     - Methods
   - ConfigurableHttpClient
-* Testing
+* TODO Testing
   - BlueEyesServiceSpecification
-  - A quick intro to Specs
-  - Specifying configuration
-  - Connecting to your service
-  - Checking futurs
+  - TODO A quick intro to Specs
+  - TODO Using service and whenDelivered
+  - TODO Specifying configuration
 * Mongo
 * JSON
 * Streaming Requests and Responses and Comet
@@ -46,3 +45,6 @@
     - HealthMonitor
     - Interactive discovery
   - HAProxy
+
+* Architecture
+  - Validation
