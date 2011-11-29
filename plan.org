@@ -1,6 +1,6 @@
 #+TITLE: The Lowdown on BlueEyes
-* [COMPLETE] Introduction
-  Build a simple webservice in BlueEyes
+* TODO Introduction
+  TODO: running a service
 * Building Request Handlers
   - Request parsing combinators
   - The HttpRequestHandler types
