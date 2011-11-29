@@ -281,6 +281,16 @@ object CalculatorServer extends BlueEyesServer with CalculatorService
 
 A server has `start` and `stop` methods, and a `main` method. By default the `main` method takes a `--configFile` command line option, specifying a file containing configuration parameters. Since our service has no configuration you can simply create an empty file and pass that on the command line.
 
+## Running A Server
+
+Most environments provide some way to run a class with a `main` method. You can use this to test your server. For example, from within `sbt` you issue the command
+
+{% highlight bash %}
+> run CalculatorService /path/to/test.config
+{% endhighlight %}
+
+In a [later section]("running.html") we'll talk about how to package your complete service into one JAR file that you can upload to a production server.
+
 ## Next Steps
 
 We've build a complete service, showing the basic elements of using BlueEyes. The complete code for this example service is available [here](calculator-service)

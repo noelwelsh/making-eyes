@@ -10,26 +10,7 @@ This short book describes [BlueEyes](https://github.com/jdegoes/blueeyes), a sim
 - you want to leverage Scala's type system to catch errors at compile time.
 - you want fast development, a quick testing cycle, and simple deployment.
 
+This book should provide everything you need to develop in BlueEyes and deploy to production environments using many machines.
 
-## Table of Contents
+I assume you know how to use Scala, and are comfortable with your development environment of choice. Certain aspects of this book, such as the section on deployment, go beyond pure software development. When I discuss build systems, I give examples for SBT. When discussing system administration I assume a Unix-like system.
 
-- [A quick introduction to BlueEyes](intro.html), in which we build a basic web service.
-- [More on services](services.html)
-   - Bijections and content types
-   - Request parsing combinators
-   - HttpRequestHandler types
-   - Configuration 
-   - Augmenting services (health monitor, logging, etc.)
-- Manipulating JSON
-   - Constructing JSON using the DSL
-   - Extracting elements from JSON
-   - JSON data type representation
-- Mongo integration
-- Comet
-- Http Client
-- Testing
-- Deployment
-   - OneJar
-   - RSync
-   - HAProxy
-- Concurrency in BlueEyes

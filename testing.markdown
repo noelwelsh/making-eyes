@@ -1,4 +1,9 @@
-# Testing BlueEyes Services
+---
+layout: page
+title: Testing BlueEyes Services
+---
+
+BlueEyes provides some custom additions to the `Specs` testing framework to allow you to easily test services. At the time of writing the current BlueEyes release (the 0.4 series) supports `Specs`. The next major release (0.5) will support `Specs 2`.
 
 BlueEyes testing framework supports `Specs`, so the first thing is to add that to your project:
 

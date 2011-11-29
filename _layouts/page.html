@@ -14,6 +14,21 @@
         max-width: 720px;
       }
 
+      .footer {
+        background-color: #eee;
+        min-width: 940px;
+        padding: 30px 0;
+        text-shadow: 0 1px 0 #fff;
+        border-top: 1px solid #e5e5e5;
+        -webkit-box-shadow: inset 0 5px 15px rgba(0,0,0,.025);
+        -moz-box-shadow: inset 0 5px 15px rgba(0,0,0,.025);
+        box-shadow: inset 0 5px 15px rgba(0,0,0,.025);
+      }
+
+      .footer p {
+        color: #555;
+      }
+
       code, pre {
         line-height: 1.5;
       }
@@ -40,15 +55,15 @@
         <h5>Contents</h5>
         <ul>
           <li><a href="/intro.html">Quick Start</a></li>
-          <li><a href="#">Request Handlers</a></li>
-          <li><a href="#">Running Services</a></li>
-          <li><a href="#">Concurrency</a></li>
-          <li><a href="#">Consuming Services</a></li>
-          <li><a href="#">Testing</a></li>
-          <li><a href="#">Mongo</a></li>
-          <li><a href="#">JSON</a></li>
-          <li><a href="#">Streaming Requests and Responses</a></li>
-          <li><a href="#">Deployment</a></li>          
+          <li><a href="/request-handlers.html">Request Handlers</a></li>
+          <li><a href="/running.html">Running Services</a></li>
+          <li><a href="/concurrency.html">Concurrency</a></li>
+          <li><a href="/http-client.html">Consuming Services</a></li>
+          <li><a href="/testing.html">Testing Services</a></li>
+          <li><a href="/json.html">Manipulating JSON</a></li>
+          <li><a href="/mongo.html">Working with Mongo</a></li>
+          <li><a href="/streaming.html">Streaming Requests and Responses</a></li>
+          <li><a href="/deployment.html">Deployment</a></li>          
         </ul>
       </div>
     </div>
@@ -58,5 +73,12 @@
       {{ content }}
     </div>
   </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="pull-right"><a href="#">Back to top</a></p>
+      <p>Copyright Noel Welsh. Licensed under the Creative Commons Attribution Non-commercial.</p>
+    </div>
+  </footer>
 </body>
 </html>

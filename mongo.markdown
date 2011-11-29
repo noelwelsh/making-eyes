@@ -1,6 +1,6 @@
 ---
 layout: page
-title: BlueEyes' Mongo Integration
+title: Working with Mongo
 ---
 
 ## Mongo Integration

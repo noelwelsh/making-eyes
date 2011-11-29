@@ -1,4 +1,7 @@
-# Deploying BlueEyes Applications
+---
+layout: page
+title: Deploying Services in Production
+---
 
 At some point you'll want to move your BlueEyes application to a live environment. Creating a `JAR` file containing the code and all it's dependencies is the simplest way to do this. Then you can just run
 

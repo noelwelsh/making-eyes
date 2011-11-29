@@ -1,10 +1,14 @@
 #+TITLE: The Lowdown on BlueEyes
-* TODO Introduction
-  TODO: running a service
-* Building Request Handlers
-  - Request parsing combinators
-  - The HttpRequestHandler types
-  - Bijections
+* TODO Formatting
+  - Links in about page
+  - License on page.html
+  - Fix sizing of content
+* TODO Introduction`
+  - Tests for calculator app
+* TODO Building Request Handlers
+  + Request parsing combinators
+  + The HttpRequestHandler types
+  + Bijections
 * Running Services
  - Configuration
    - Config file format
