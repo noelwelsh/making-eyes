@@ -20,9 +20,16 @@
    - rsync
 * BlueEyes Concurrency Model
   - Future
-    - Methods on future
+    - The Triune Nature
+      - Implications of cancelled futures
+    - Using futures
+      - map and flatMap
+      - for comprehensions
+      - orElse
+      - deliverTo
     - Creating futures
       - sync and async
+    - Interoperation with Akka
   - Actors
 * Consuming Services
   - HttpClient
@@ -36,15 +43,22 @@
   - TODO Specifying configuration
 * Mongo
 * JSON
-* Streaming Requests and Responses and Comet
-  - Inside ByteChunk
-    A stream of bytes
+* BlueEyes Design Patterns
+  - Working within futures
+  - Converting exceptions to values
+    - Scalaz Validation
+    - Failure codes
+    - ValidatedFutures
+  - Custom Request Handlers
+  - Separate interface from implementation
 * Deployment
   - Service augmentation
     - Logging
     - HealthMonitor
     - Interactive discovery
   - HAProxy
+* Streaming Requests and Responses and Comet
+  - Inside ByteChunk
+    A stream of bytes
+* Connecting to other Persistent Stores
 
-* Architecture
-  - Validation
