@@ -3,8 +3,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{{ page.title }}</title>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="/css/pygments.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/pygments.css" rel="stylesheet" type="text/css">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -50,6 +50,19 @@
         word-wrap:break-word;
       }
     </style>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-27398439-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+    </script>
 </head>
 
 <body>
@@ -57,10 +70,10 @@
   <div class="topbar">
     <div class="topbar-inner">
       <div class="container-fluid">
-        <a class="brand" href="/">The Lowdown on BlueEyes</a>
+        <a class="brand" href="index.html">The Lowdown on BlueEyes</a>
         <ul class="nav">
-          <li class="active"><a href="/">Home</a></li>
-          <li><a href="/about.html">About</a></li>
+          <li class="active"><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
         </ul>
       </div>
     </div>
@@ -71,16 +84,16 @@
       <div class="well">
         <h5>Contents</h5>
         <ul>
-          <li><a href="/intro.html">Quick Start</a></li>
-          <li><a href="/request-handlers.html">Request Handlers</a></li>
-          <li><a href="/running.html">Running Services</a></li>
-          <li><a href="/concurrency.html">Concurrency</a></li>
-          <li><a href="/http-client.html">Consuming Services</a></li>
-          <li><a href="/testing.html">Testing Services</a></li>
-          <li><a href="/json.html">Manipulating JSON</a></li>
-          <li><a href="/mongo.html">Working with Mongo</a></li>
-          <li><a href="/streaming.html">Streaming Requests and Responses</a></li>
-          <li><a href="/deployment.html">Deployment</a></li>          
+          <li><a href="intro.html">Quick Start</a></li>
+          <li><a href="request-handlers.html">Request Handlers</a></li>
+          <li><a href="running.html">Running Services</a></li>
+          <li><a href="concurrency.html">Concurrency</a></li>
+          <li><a href="http-client.html">Consuming Services</a></li>
+          <li><a href="testing.html">Testing Services</a></li>
+          <li><a href="json.html">Manipulating JSON</a></li>
+          <li><a href="mongo.html">Working with Mongo</a></li>
+          <li><a href="streaming.html">Streaming Requests and Responses</a></li>
+          <li><a href="deployment.html">Deployment</a></li>          
         </ul>
       </div>
     </div>
@@ -94,7 +107,8 @@
   <footer class="footer">
     <div class="container">
       <p class="pull-right"><a href="#">Back to top</a></p>
-      <p>Copyright Noel Welsh. Licensed under the Creative Commons Attribution Non-commercial.</p>
+      <p>Copyright Noel Welsh.</p> 
+      <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
     </div>
   </footer>
 </body>
