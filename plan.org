@@ -1,11 +1,11 @@
 #+TITLE: The Lowdown on BlueEyes
 * TODO Formatting
   - Links in about page
-  - License on page.html
+  - DONE License on page.html
   - Fix sizing of content
 * TODO Introduction`
   - Tests for calculator app
-* Building Request Handlers
+* TODO Building Request Handlers
   + Request parsing combinators
   + The HttpRequestHandler types
   + Bijections
