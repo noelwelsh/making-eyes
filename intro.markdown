@@ -289,7 +289,7 @@ Most environments provide some way to run a class with a `main` method. You can 
 > run CalculatorService /path/to/test.config
 {% endhighlight %}
 
-In a [later section]("running.html") we'll talk about how to package your complete service into one JAR file that you can upload to a production server.
+In a [later section](running.html) we'll talk about how to package your complete service into one JAR file that you can upload to a production server.
 
 ## Next Steps
 
