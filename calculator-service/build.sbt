@@ -13,13 +13,15 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.reportgrid"          %% "blueeyes"         % "0.4.24" % "compile"
+  "com.reportgrid"          %% "blueeyes"         % "0.4.24" % "compile",
+  "org.scala-tools.testing" %  "specs_2.9.0-1"    % "1.6.8" % "test",
+  "net.lag"                 %  "configgy"         % "2.0.0" % "compile" intransitive()
 )
 
-// Exclude backup files by default.  This uses ~=, which accepts a function of
-//  type T => T (here T = FileFilter) that is applied to the existing value.
-// A similar idea is overriding a member and applying a function to the super value:
-//  override lazy val defaultExcludes = f(super.defaultExcludes)
-//
-defaultExcludes ~= (filter => filter || "*~")
+ivyXML :=
+<dependencies>
+  <dependency org="com.reportgrid" name="blueeyes_2.9.1" rev="0.4.24">
+    <exclude module="configgy"/>
+  </dependency>
+</dependencies>
 

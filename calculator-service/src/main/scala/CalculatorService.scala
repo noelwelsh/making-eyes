@@ -7,23 +7,29 @@ trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkStrin
   val calculatorService = service("calculatorService", "1.0.0") {
     context => 
       startup {
+        println("Starting up")
         ().future
       } ->
-      request {
+      request { config: Unit =>
+        println("Handling request")
         path("/add" / 'number1 / 'number2) { 
-          parameter('number1) { number1 =>
-            parameter('number2) { number2 => 
+          parameter('number1 ?: "10") { number1 =>
+          //  parameter('number2) { number2 => 
               request: HttpRequest[ByteChunk] =>
                 try {
+                  println("Got request with parameters "+request.parameters)
+                  //val number1 = request.parameters.get('number1).get
+                  val number2 = request.parameters.get('number2).get
+                  println("Adding "+number1+" "+number2)
                   val n1 = number1.toDouble
                   val n2 = number2.toDouble
                   val sum = n1 + n2
                   
                   HttpResponse[ByteChunk](content = Some(sum.toString)).future
                 } catch {
-                  case e: NumberFormatException => HttpResponse[ByteChunk](status = HttpStatus(BadRequest)).future  
+                  case e => HttpResponse[ByteChunk](status = HttpStatus(BadRequest)).future  
                 }
-           }
+           //}
          }
         } ~
         path("/multiply" / 'number1 / 'number2) {
@@ -41,9 +47,10 @@ trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkStrin
                 }
            }
          }
-        }
+        } 
       } ->
       shutdown { config =>
+        println("Shutting down")
         ().future
       }
   }
