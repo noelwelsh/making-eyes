@@ -9,10 +9,22 @@ class CalculatorServiceSpec extends BlueEyesServiceSpecification with Calculator
       future must whenDelivered {
         response => response must beLike {
           case HttpResponse(status, _, Some(content), _) =>
-            content mustEqual "3.0"
+            content mustEqual "3"
           case _ => ko
         }
       }
+    }
+
+    "return with the product of its inputs" in {
+      val future = service.get[String]("/multiply/3/4")
+
+      future must whenDelivered {
+        response => response must beLike {
+          case HttpResponse(status, _, Some(content), _) =>
+            content mustEqual "12"
+          case _ => ko
+        }
+      }      
     }
   }
 }
