@@ -16,6 +16,6 @@ I assume you know how to use Scala, and are comfortable with your development en
 
 This book is still a work in progress, and all feedback is greatly appreciated!
 
-*News*
+## News
 
  - Note there is a significant error in this version of the book -- `parameter` does not work as I claim. Don't use the `parameter` combinator, but rather get parameters from the request object directly. I'm working on updating the book to BlueEyes 0.6. These updates won't have this problem.
