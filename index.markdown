@@ -15,3 +15,7 @@ This book should provide everything you need to develop in BlueEyes and deploy t
 I assume you know how to use Scala, and are comfortable with your development environment of choice. Certain aspects of this book, such as the section on deployment, go beyond pure software development. When I discuss build systems, I give examples for SBT. When discussing system administration I assume a Unix-like system.
 
 This book is still a work in progress, and all feedback is greatly appreciated!
+
+*News*
+
+ - Note there is a significant error in this version of the book -- `parameter` does not work as I claim. Don't use the `parameter` combinator, but rather get parameters from the request object directly. I'm working on updating the book to BlueEyes 0.6. These updates won't have this problem.
