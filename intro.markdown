@@ -3,7 +3,9 @@ layout: page
 title: A Quick Introduction to BlueEyes
 ---
 
-The *Service* is the core concept in BlueEyes. A service is computation that processes an HTTP request, returning an HTTP result. (Note that BlueEyes is not tied to HTTP, but most of the time you'll use it to process HTTP.) An example of a service is displaying an HTML page to a request that is asking for the path `/foo.html`.
+The *Service* is the core concept in BlueEyes. A service is a computation that processes an HTTP request and returns a HTTP response[^http]. As a very simple example, a service might respond to requests for the path `/index.html` with an HTML page containing a directory listing. Of course existing web servers such as Apache and Nginx already do this just fine. BlueEyes shines were we want to build more complex services that full utilise the HTTP protocol.
+
+[^http]: Note that BlueEyes is not tied to HTTP, but most of the time that is the protocol we'll use.
 
 Services are built out of *service combinators*, which inspect a request and decide to continue processing or to stop. In the above example, we'd use the `path` service combinator to see if the request matches `/foo.html`. Service combinators are arranged in a tree structure, with branching in the tree indicating alternative combinators to try.
 
