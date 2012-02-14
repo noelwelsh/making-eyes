@@ -7,9 +7,9 @@ The *Service* is the core concept in BlueEyes. A service is a computation that p
 
 [^http]: Note that BlueEyes is not tied to HTTP, but most of the time that is the protocol we'll use.
 
-Services are built out of *service combinators*, which inspect a request and decide to continue processing or to stop. In the above example, we'd use the `path` service combinator to see if the request matches `/foo.html`. Service combinators are arranged in a tree structure, with branching in the tree indicating alternative combinators to try.
+Services are built out of *service combinators*, which inspect a request and decide to continue processing or to stop. In the above example, we'd use the `path` service combinator to see if the request matches `/index.html`. As the name suggests, service combinators can be combined to create more complex combinators. We could, for example, only respond to requests for the path `/index.html` *and* which accept `text/html`. Alternatively, we might want a service that responds to the path `/index.html` *or* `/index.json`.
 
-Service combinators end in a *service handler*, a function from an HTTP request to a response, which determines what the service responds with if all the combinators leading to the handler are successful. Continuing our example, a service handler would be responsible for actually constructing the page we reply with in response to the path `/foo.html`.
+Service combinators end in a *service handler*, a function from an HTTP request to a response, which determines what the service responds with if all the combinators leading to the handler are successful. Continuing our example, a service handler would be responsible for actually constructing the page we send in response to the path `/index.html`.
 
 Typically a service needs some configuration parameters (for example, the database to use), and will need to create (and later destroy) some resources, such as a connection to the database. In BlueEyes the configuration parameters are called the service's *context*, and the service plus its startup and shutdown functions is called a *service descriptor*.
 
