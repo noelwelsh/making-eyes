@@ -197,7 +197,7 @@ A few things to note about the code above. Firstly, the `HttpResponse` construct
 
 Notice also the type, `ByteChunk`, we parameterise `HttpResponse` by. This specifies how the content, in our case the sum, is encoded. The basic content type is `ByteChunk`. As the name suggests this represents chunks of bytes, which are essentially a lazy list of byte arrays. BlueEyes understands other content types, such as `JValue` which is used to represent JSON data.
 
-Note that the content we set in the `HttpResponse` is a `String`, not a `ByteChunk`. All data must eventually be converted to `ByteChunk`s, so BlueEyes has a number of *bijections* for converting data. By mixing `blueeyes.core.data.BijectionsChunkString` into our service, we make available an implicit bijection between `String` and `ByteChunk`. Thus we can set the content to a `String` and the bijection will implicitly convert it to a `ByteChunk`. That is, we alter the definition of `CalculatorService` to be:
+Note that the content we set in the `HttpResponse` is a `String`, not a `ByteChunk`. All data must eventually be converted to `ByteChunk`s, so BlueEyes has a number of *bijections* for converting data. By mixing `blueeyes.core.data.BijectionsChunkString` into our service, we make available an implicit bijection between `String` and `ByteChunk`. Thus we can set the content to a `String` and the bijection will implicitly convert it to a `ByteChunk`. That is, we alter the definition of `CalculatorService` to be
 
 {% highlight scala %}
 import blueeyes.core.data.{ByteChunk, BijectionsChunkString}
@@ -211,29 +211,42 @@ Finally notice we wrap our responses in futures. Remember request handlers retur
 
 #### Chaining Together Request Handlers
 
-We've implemented one of the two request handlers. The code for `multiply` is a straightforward adaptation of `add`. However we now need to chain together these two handlers. BlueEyes also provides a `~` method that does this. With this addition we can write our request handlers as
+We've implemented one of the two request handlers. The code for `multiply` is a straightforward adaptation of `add`. However we now need to chain together these two handlers. Remember BlueEyes provides a `~` method that does this. With this addition we can write our request handlers as
 
 {% highlight scala %}
 path("/add" / 'number1 / 'number2) {
-  ... // rest of add code goes here
+  (request: HttpRequest[ByteChunk]) =>
+    try {
+      val number1 = request.parameters('number1).toInt
+      val number2 = request.parameters('number2).toInt
+      val sum = (number1 + number2).toString
+
+      Future {
+        HttpResponse[ByteChunk](content = Some(sum.toString))
+      }
+    } catch {
+        case e: NumberFormatException =>
+          Future {
+            HttpResponse[ByteChunk](status = HttpStatus(BadRequest))
+          }
+    }
 } ~
 path("/multiply" / 'number1 / 'number2) {
-  try {
-    val product =
-      for {
-        number1 <- request.parameters.get('number1).toInt
-        number2 <- request.parameters.get('number2).toInt
-      } yield (number1 * number2).toString
+  (request: HttpRequest[ByteChunk]) =>
+    try {
+      val number1 = request.parameters('number1).toInt
+      val number2 = request.parameters('number2).toInt
+      val product = (number1 * number2).toString
 
-    Promise success {
-      HttpResponse[ByteChunk](content = Some(product.toString))
+      Future {
+        HttpResponse[ByteChunk](content = Some(product.toString))
+      }
+    } catch {
+        case e: NumberFormatException =>
+          Future {
+            HttpResponse[ByteChunk](status = HttpStatus(BadRequest))
+          }
     }
-  } catch {
-      case e: NumberFormatException =>
-        Promise success {
-          HttpResponse[ByteChunk](status = HttpStatus(BadRequest))
-        }
-  }
 }
 {% endhighlight %}
 
@@ -242,7 +255,7 @@ path("/multiply" / 'number1 / 'number2) {
 The complete code for the calculator service is:
 
 {% highlight scala %}
-import akka.Promise
+import akka.dispatch.Future
 import blueeyes.BlueEyesServiceBuilder
 import blueeyes.core.http.{HttpRequest, HttpResponse, HttpStatus}
 import blueeyes.core.http.HttpStatusCodes._
@@ -252,49 +265,47 @@ trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkStrin
   val calculatorService = service("calculatorService", "1.0.0") {
     context =>
       startup {
-        Promise.success{()}
+        Future { () }
       } ->
       request { config: Unit =>
         path("/add" / 'number1 / 'number2) {
-          try {
-            val sum =
-              for {
-                number1 <- request.parameters.get('number1).toInt
-                number2 <- request.parameters.get('number2).toInt
-              } yield (number1 + number2).toString
+          (request: HttpRequest[ByteChunk]) =>
+            try {
+              val number1 = request.parameters('number1).toInt
+              val number2 = request.parameters('number2).toInt
+              val sum = (number1 + number2).toString
 
-           Promise success {
-             HttpResponse[ByteChunk](content = Some(sum.toString))
-           }
-          } catch {
-              case e: NumberFormatException =>
-                Promise success {
-                  HttpResponse[ByteChunk](status = HttpStatus(BadRequest))
-                }
-          }
+              Future {
+                HttpResponse[ByteChunk](content = Some(sum.toString))
+              }
+            } catch {
+                case e: NumberFormatException =>
+                  Future {
+                    HttpResponse[ByteChunk](status = HttpStatus(BadRequest))
+                  }
+            }
         } ~
         path("/multiply" / 'number1 / 'number2) {
-          try {
-            val product =
-              for {
-                number1 <- request.parameters.get('number1).toInt
-                number2 <- request.parameters.get('number2).toInt
-              } yield (number1 * number2).toString
+          (request: HttpRequest[ByteChunk]) =>
+            try {
+              val number1 = request.parameters('number1).toInt
+              val number2 = request.parameters('number2).toInt
+              val product = (number1 * number2).toString
 
-            Promise success {
-              HttpResponse[ByteChunk](content = Some(product.toString))
+              Future {
+                HttpResponse[ByteChunk](content = Some(product.toString))
+              }
+            } catch {
+                case e: NumberFormatException =>
+                  Future {
+                    HttpResponse[ByteChunk](status = HttpStatus(BadRequest))
+                  }
             }
-          } catch {
-              case e: NumberFormatException =>
-                Promise success {
-                  HttpResponse[ByteChunk](status = HttpStatus(BadRequest))
-                }
-          }
         }
       } ->
       shutdown { config =>
         println("Shutting down")
-        Promise.success{()}
+        Future { () }
       }
   }
 }
