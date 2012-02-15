@@ -18,5 +18,6 @@ This book is still a work in progress, and all feedback is greatly appreciated!
 
 ## News
 
-- *0.2* Update code samples and prose to `0.6.0-SNAPSHOT`. All samples are tested.
+- *0.2.1* Correct code samples. Add some notes about deploying to servlet containers.
+- *0.2* Update code samples and prose to `0.6.0-SNAPSHOT`.
 - *0.1* Initial release.
