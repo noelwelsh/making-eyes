@@ -33,7 +33,7 @@ trait CalculatorService extends BlueEyesServiceBuilder {
 
 ### Service
 
-The `service` function takes a `name`, `version`, and a function from a context to a service descriptor. The `name` and the `version` are strings. The name can be anything you want, while the version number should be a version number like `"1.0.0"`:
+The `service` function takes a `name`, `version`, and a function from a context to a service descriptor. The `name` and the `version` are strings. The name can be anything you want, while the version number should be a version number like `"1.0.0"`.
 
 {% highlight scala %}
 import blueeyes.BlueEyesServiceBuilder
@@ -45,10 +45,14 @@ trait CalculatorService extends BlueEyesServiceBuilder {
 }
 {% endhighlight %}
 
+The `context` contains configuration information used by our service. The `CalculatorService` doesn't need any configuration, so we can ignore it, but more real services will. Configuration is discussed in more detail in the chapter on [Running services](running.html).
+
 
 ### The Service Descriptor
 
-The service descriptor is created by chaining together functions to handle `startup`, `request`s, and `shutdown`:
+The service descriptor is created by chaining together functions to handle `startup`, `request`s, and `shutdown`[^startup].
+
+[^startup]: The `startup` and `shutdown` functions are optional. We don't need them here but I'm talking about them anyway because almost all real services will use them.
 
 {% highlight scala %}
 import akka.Promise
@@ -73,41 +77,43 @@ trait CalculatorService extends BlueEyesServiceBuilder {
 
 ### Startup and Shutdown
 
-We pass to `startup` a function that will create any resources we need. This function must return a `Future`. Futures are an abstraction for handling concurrency, which hold a computation that will complete some time in the future. This is the first hint at how pervasively BlueEyes has adopted a high performance approach. We'll talk about futures in detail later. For now, all you need to know is that to convert a value to a future of that value you call `akka.Promise.success`.
+We pass to `startup` a function that will create any resources we need. This function must return a `Future`. Futures are an abstraction for handling concurrency, which hold a computation that will complete some time in &hellip; the future. This is the first hint at how pervasively BlueEyes has adopted a high performance approach. We'll talk about futures in the [chapter on concurrency](concurrency.html). For now, all you need to know is that to convert a value to a future of that value you call `akka.dispatch.Future`[^futures].
+
+[^futures]: It is actually slightly more efficient to call `akka.dispatch.Promise.succesful`, but this messes up type inference in this simple example.
 
 The simplest startup function does nothing:
 
 {% highlight scala %}
 startup {
-  Promise.success{()}
+  Future { () }
 }
 {% endhighlight %}
 
-The `shutdown` function is similar, except it takes a function from a configuration (of the same type as the value return by the startup function) to a future. Since we haven't done anything in our startup we don't need to do anything in our shutdown:
+The `shutdown` function is similar, except it takes a function from a configuration (of the same type as the value returned by the startup function) to a future. Since we haven't done anything in our startup we don't need to do anything in our shutdown:
 
 {% highlight scala %}
 shutdown { config =>
-  Promise.success{()}
+  Future { () }
 }
 {% endhighlight %}
 
 Our code currently looks like:
 
 {% highlight scala %}
-import akka.Promise
+import akka.dispatch.Future
 import blueeyes.BlueEyesServiceBuilder
 
 trait CalculatorService extends BlueEyesServiceBuilder {
   val calculatorService = service("calculatorService", "1.0.0") {
     context =>
       startup {
-        Promise.success{()}
+        Future { () }
       } ->
       request {
         // Handle requests
       } ->
       shutdown { config =>
-        Promise.success{()}
+        Future { () }
       }
   }
 }
@@ -160,42 +166,27 @@ In our case we want to match the path `/add` or `/mulitply`. Furthermore, we exp
 
 {% highlight scala %}
 path("/add" / 'number1 / 'number2) { request =>
-  val number1 = request.parameters.get('number1)
-  val number2 = request.parameters.get('number2)
+  val number1 = request.parameters('number1)
+  val number2 = request.parameters('number2)
   // Do something
 }
 {% endhighlight %}
-
-The values we get back from `parameters.get` are `Option`s. Typically we'll use a `for` comprehension to extract them:
-
-{% highlight scala %}
-path("/add" / 'number1 / 'number2) { request =>
-  for {
-    number1 <- request.parameters.get('number1)
-    number2 <- request.parameters.get('number2)
-  } yield // Do something
-}
-{% endhighlight %}
-
-This is a bit annoying. A better solution is in development.
 
 We're now ready to write the `add` request handler. We simply need to convert `number1` and `number2` to numbers (let's use Ints). If this is successful we'll return the sum, otherwise we'll return an appropriate error. Here's the code:
 
 {% highlight scala %}
 path("/add" / 'number1 / 'number2) {
   try {
-    val sum =
-      for {
-        number1 <- request.parameters.get('number1).toInt
-        number2 <- request.parameters.get('number2).toInt
-      } yield (number1 + number2).toString
+    val number1 = request.parameters('number1).toInt
+    val number2 = request.parameters('number2).toInt
+    val sum = (number1 + number2).toString
 
-    Promise success {
+    Future {
         HttpResponse[ByteChunk](content = Some(sum.toString))
     }
   } catch {
       case e: NumberFormatException =>
-        Promise success {
+        Future {
           HttpResponse[ByteChunk](status = HttpStatus(BadRequest))
         }
   }

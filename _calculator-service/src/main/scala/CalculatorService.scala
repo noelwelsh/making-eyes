@@ -14,11 +14,9 @@ trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkStrin
         path("/add" / 'number1 / 'number2) {
           (request: HttpRequest[ByteChunk]) =>
             try {
-              val sum =
-                for {
-                  number1 <- request.parameters.get('number1).map(_.toInt)
-                  number2 <- request.parameters.get('number2).map(_.toInt)
-                } yield (number1 + number2).toString
+              val number1 = request.parameters('number1).toInt
+              val number2 = request.parameters('number2).toInt
+              val sum = (number1 + number2).toString
 
               Future {
                 HttpResponse[ByteChunk](content = Some(sum.toString))
@@ -33,11 +31,9 @@ trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkStrin
         path("/multiply" / 'number1 / 'number2) {
           (request: HttpRequest[ByteChunk]) =>
             try {
-              val product =
-                for {
-                  number1 <- request.parameters.get('number1).map(_.toInt)
-                  number2 <- request.parameters.get('number2).map(_.toInt)
-                } yield (number1 * number2).toString
+              val number1 = request.parameters('number1).toInt
+              val number2 = request.parameters('number2).toInt
+              val product = (number1 * number2).toString
 
               Future {
                 HttpResponse[ByteChunk](content = Some(product.toString))
