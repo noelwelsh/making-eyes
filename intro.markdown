@@ -3,6 +3,8 @@ layout: page
 title: A Quick Introduction to BlueEyes
 ---
 
+In this chapter we're going to visit some of the core concepts in BlueEyes, and build a very simple REST service.
+
 The *Service* is the core concept in BlueEyes. A service is a computation that processes an HTTP request and returns a HTTP response[^http]. As a very simple example, a service might respond to requests for the path `/index.html` with an HTML page containing a directory listing. Of course existing web servers such as Apache and Nginx already do this just fine. BlueEyes shines were we want to build more complex services that full utilise the HTTP protocol.
 
 [^http]: Note that BlueEyes is not tied to HTTP, but most of the time that is the protocol we'll use.
