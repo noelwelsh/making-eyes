@@ -23,6 +23,11 @@
    - Accessing configuration information
  - Dealing with problems
    - Logging
+* Monitoring and Debugging Services
+  - Service augmentation
+    - Logging
+    - HealthMonitor
+    - Interactive discovery
 * BlueEyes Concurrency Model
   - Future
     - The Triune Nature
@@ -62,12 +67,9 @@
     - ValidatedFutures
   - Custom Request Handlers
   - Separate interface from implementation
-* Deployment
-  - Service augmentation
-    - Logging
-    - HealthMonitor
-    - Interactive discovery
-  - HAProxy
+* BlueEyes Development Process
+  - Testing
+  - Revolver
 * Streaming Requests and Responses and Comet
   - Inside ByteChunk
     A stream of bytes
