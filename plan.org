@@ -1,3 +1,4 @@
+
 #+TITLE: The Lowdown on BlueEyes
 * TODO Formatting
   - Links in about page
@@ -29,17 +30,16 @@
     - HealthMonitor
     - Interactive discovery
 * BlueEyes Concurrency Model
-  - Future
-    - The Triune Nature
-      - Implications of cancelled futures
+  - Futures
     - Using futures
       - map and flatMap
       - for comprehensions
-      - orElse
-      - deliverTo
+      - serial and parallel composition
     - Creating futures
-      - sync and async
-    - Interoperation with Akka
+      - Promise and Future
+    - Handling errors
+      - Exceptions
+      - Sane ways of handling errors
   - Actors
 * Running Services
  - One Jar deployment
