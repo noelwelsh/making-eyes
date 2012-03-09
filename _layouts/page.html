@@ -3,7 +3,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{{ page.title }}</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A short book on the BlueEyes web framework">
+    <meta name="author" content="Noel Welsh">
+
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
     <link href="css/pygments.css" rel="stylesheet" type="text/css">
     <style type="text/css">
       body {
@@ -67,8 +72,8 @@
 
 <body>
 
-  <div class="topbar">
-    <div class="topbar-inner">
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
       <div class="container-fluid">
         <a class="brand" href="index.html">The Lowdown on BlueEyes</a>
         <ul class="nav">
@@ -80,36 +85,39 @@
   </div>
 
   <div class="container-fluid">
-    <div class="sidebar">
-      <div class="well">
-        <h5>Contents</h5>
-        <ul>
-          <li><a href="intro.html">Quick Start</a></li>
-          <li><a href="request-handlers.html">Request Handlers</a></li>
-          <li><a href="running.html">Running Services</a></li>
-          <li><a href="concurrency.html">Concurrency</a></li>
-          <li><a href="http-client.html">Consuming Services</a></li>
-          <li><a href="testing.html">Testing Services</a></li>
-          <li><a href="json.html">Manipulating JSON</a></li>
-          <li><a href="mongo.html">Working with Mongo</a></li>
-          <li><a href="streaming.html">Streaming Requests and Responses</a></li>
-          <li><a href="deployment.html">Deployment</a></li>          
-        </ul>
+    <div class="row-fluid">
+      <div class="span3">
+        <div class="well sidebar-nav">
+          <ul class="nav nav-list">
+            <li class="nav-header">Contents</li>
+            <li><a href="intro.html">Quick Start</a></li>
+            <li><a href="request-handlers.html">Request Handlers</a></li>
+            <li><a href="running.html">Running Services</a></li>
+            <li><a href="concurrency.html">Concurrency</a></li>
+            <li><a href="http-client.html">Consuming Services</a></li>
+            <li><a href="testing.html">Testing Services</a></li>
+            <li><a href="json.html">Manipulating JSON</a></li>
+            <li><a href="mongo.html">Working with Mongo</a></li>
+            <li><a href="streaming.html">Streaming Requests and Responses</a></li>
+            <li><a href="deployment.html">Deployment</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="span9">
+        <div class="content">
+          <h1>{{ page.title }}</h1>
+          {{ content }}
+        </div>
       </div>
     </div>
-    
-    <div class="content">
-      <h1>{{ page.title }}</h1>
-      {{ content }}
-    </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>Copyright Noel Welsh.</p>
+        <p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
+      </div>
+    </footer>
   </div>
-
-  <footer class="footer">
-    <div class="container">
-      <p class="pull-right"><a href="#">Back to top</a></p>
-      <p>Copyright Noel Welsh.</p> 
-      <p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.</p>
-    </div>
-  </footer>
 </body>
 </html>
