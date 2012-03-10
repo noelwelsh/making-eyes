@@ -38,7 +38,7 @@ I write this book in my free time. If it has been useful to you, you may like to
     <input name="shopping-cart.item-options.items.item-3.digital-content.url" type="hidden" value="http://noelwelsh.com/blueeyes/thankyou.html"/>
     <input name="item_option_name_4" type="hidden" value="Donation x 8"/>
     <input name="item_option_price_4" type="hidden" value="20.0"/>
-    <input name="item_option_description_4" type="hidden" value="Eight standardised units of donation. The boat is bobbing in the current."/>
+    <input name="item_option_description_4" type="hidden" value="Eight standardised units of donation. The boat is out and bobbing in the current."/>
     <input name="item_option_quantity_4" type="hidden" value="1"/>
     <input name="item_option_currency_4" type="hidden" value="GBP"/>
     <input name="shopping-cart.item-options.items.item-4.digital-content.url" type="hidden" value="http://noelwelsh.com/blueeyes/thankyou.html"/>

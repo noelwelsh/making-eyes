@@ -3,7 +3,7 @@ layout: page
 title: Building Request Handlers
 ---
 
-In the [introduction](intro.html) we saw the basics of constructing REST services in BlueEyes. In this section we're going to go into detail into the major components that make up a service: requests and responses, service combinators, and service handlers. This will
+In the [introduction](intro.html) we saw the basics of constructing REST services in BlueEyes. In this section we're going to go into detail into the major components that make up a service: requests and responses, service combinators, and service handlers.
 
 ## Requests, Responses, and Bijections
 
@@ -31,26 +31,102 @@ In summary:
 
 ### Using Bijections
 
+Now let's look at how we use Bijections, first as an application developer where the service combinators take care of applying them, and then as a libary developer creating new service combinators.
 
+Service combinators that transform content typically take bijections as implicit argument. If our code uses these combinators all we have to do is make sure the correct implicit values are in scope. In the vast majority of cases this is a bijection between `ByteChunk` and some other data type, of which BlueEyes provides many. The available bijections are:
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Data Type</th> <th>Request Bijections</th> <th>Response Bijections</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>JValue</code> (JSON)</td> <td><code>BijectionsChunkFutureJson</code></td> <td><code>BijectionsChunkJson</code></td></tr>
+    <tr><td><code>XML</code></td> <td><code>BijectionsChunkFutureXML</code></td> <td><code>BijectionsChunkXML</code></td></tr>
+    <tr><td><code>String</code></td> <td><code>BijectionsChunkFutureString</code></td> <td><code>BijectionsChunkString</code></td></tr>
+    <tr><td><code>Array[Byte]</code></td> <td><code>BijectionsChunkFutureByteArray</code></td> <td><code>BijectionsChunkByteArray</code></td></tr>
+  </tbody>
+</table>
+
+If we wanted to make available, say, bijections between `ByteChunk` and `JValue`, we would write code like
+
+{% highlight scala %}
+import blueeyes.core.data.{BijectionsChunkFutureJson, BijectionsChunkJson}
+
+trait MyService extends BlueEyesServiceBuilder
+  with BijectionsChunkFutureJson
+  with BijectionsChunkJson
+{
+  ... // Bijections are available here
+}
+{% endhighlight %}
+
+If we're writing service combinators we need to know how to use bijections. A bijections with type `Bijection[A,B]` will have functions:
+
+- `apply(t: A): B` to convert from `A` to `B`
+- `unapply(s: B): A` to convert from `B` to `A`
+
+With these functions we can apply any needed conversions.
 
 
 ## Service Combinators
 
-## HTTP Pattern Matching
+Service combinators are filters that process a request and decide to continue processing or to reject the request. We'll discuss first how to use combinator, then the predefined combinators, and then how to build our own.
 
-Pattern matching on HTTP requests is done using the functions defined in `blueeyes.core.service.HttpRequestHandlerCombinators`. `BlueEyesServiceBuilder` extends `HttpRequestHandlerCombinators`.
+### Using Combinators
 
-### contentType
+All combinators follow the same pattern. If we want to take an action when a combinator matches, we nest that action inside the combinator. For example, to filter a path and then a `GET` request, we could write
+
+{% highlight scala %}
+path("/foo/bar") {
+  get {
+    // Do something
+  }
+}
+{% endhighlight %}
+
+At some point the filtering is complete and can we write a service handler: a function from request to response. To continue the above example, we could write
+
+{% highlight scala %}
+path("/foo/bar") {
+  get {
+    (req: HttpRequest[ByteChunk]) => Future { HttpResponse[ByteChunk]() }
+  }
+}
+{% endhighlight %}
+
+This would match `GET` requests for the path `/foo/bar` and return an empty `OK` response.
+
+To indicate alternative filters we join them with `~`
+
+{% highlight scala %}
+path("/foo/bar") {
+  // Do something if we match /foo/bar
+} ~
+path("/foo/baz") {
+  // Do something if we match /foo/baz
+}
+{% endhighlight %}
+
+### Predefined Combinators
+
+BlueEyes predefined combinators are all provided by `blueeyes.core.service.HttpRequestHandlerCombinators`. `BlueEyesServiceBuilder` extends `HttpRequestHandlerCombinators`.
+
+#### HTTP Method
+
+The most basic combinators match the HTTP request methods. There is a combinator for each HTTP method: `get`, `post`, `put`, `head`, `delete`, `patch`, `options`, `trace`, and `connect`. Their use is straightforward. For example, to match a `get` request:
+
+{% highlight scala %}
+get {
+  // Do something after matching a GET request
+}
+{% endhighlight %}
+
+#### Path
+
+#### Content Type
 
 This combinator specifies that the service consumes *and* produces content of the given MIME type. Many common MIME types are bound to values, so you can write just, say, `application/json` rather than constructing a `MimeType` object yourself.
 
 To access these import `blueeyes.core.http.MimeTypes._`
-
-
-### Request Methods
-
-The common HTTP request methods `get`, `post`, `put`, and `head`, as well as less common (nonstandard?) methods `delete`, `patch`, `options`, `trace`, and `connect` are specified as combinators.
-
-## The HttpRequestHandler Types
-
-## Bijections

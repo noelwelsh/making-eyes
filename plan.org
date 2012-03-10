@@ -4,7 +4,7 @@
   - Links in about page
   - DONE License on page.html
   - Fix sizing of content
-* TODO Introduction`
+* DONE Introduction`
   - Tests for calculator app
 * TODO Building Services
  - Bijections

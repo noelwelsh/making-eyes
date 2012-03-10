@@ -12,12 +12,13 @@ This short book describes [BlueEyes](https://github.com/jdegoes/blueeyes), a sim
 
 This book should provide everything you need to develop in BlueEyes and deploy to production environments using many machines.
 
-This book covers version *0.6* of BlueEyes, currently `0.6.0-SNAPSHOT`. I assume you know how to use Scala, and are comfortable with your development environment of choice. Certain aspects of this book, such as the section on deployment, go beyond pure software development. When I discuss build systems, I give examples for SBT. When discussing system administration I assume a Unix-like system.
+This book covers version *0.6* of BlueEyes, currently `0.6.0-SNAPSHOT`. I assume you know how to use Scala, and are comfortable with your development environment of choice. Certain aspects of this book, such as the section on deployment, go beyond pure software development. When I discuss build systems, I give examples for SBT. When discussing system administration I assrume a Unix-like system.
 
 This book is still a work in progress, and all feedback is greatly appreciated!
 
 ## News
 
+- *0.3.2* Finish bijections section. Start on service combinators.
 - *0.3.1* Due to popular demand, donations are accepted on the [about](about.html) page.
 - *0.3* Start on Request Handler chapter. Cover bijections.
 - *0.2.1* Correct code samples. Add some notes about deploying to servlet containers.
