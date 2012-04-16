@@ -205,9 +205,4 @@ contentType(application/json) {
 }
 {% endhighlight %}
 
-
-
-
-This combinator specifies that the service consumes *and* produces content of the given MIME type. Many common MIME types are bound to values, so you can write just, say, `application/json` rather than constructing a `MimeType` object yourself.
-
-To access these import `blueeyes.core.http.MimeTypes._`
+These combinators all have an implicit bijection parameter. The intention is to transcde the content to the apropriate type, but there is no association between the `MimeType` passed to the combinator and the bijection. This means, for example, you could specify `application/json` as the MIME type, but treat the content as XML. Since this is usually an error, two special purpose combinators are provided. `jvalue` and `xml` act like the `contentType` combinator but set the type of the bijection appropriately. You still need to make the correct bijection available to use these combinators.
