@@ -177,11 +177,11 @@ path("/extension/(?<extension>[0-9]{2})") {
 
 #### Content Types
 
-Handling content types is a major part of many web services. BlueEyes provides the `accepts`, `produces`, and `contentType` combinators to respectively filter incoming requests, ensure outgoing responses have a correct `Content-Type` header, and both filter incoming requests and set the `Content-Type` header on responses.
+Handling content types is a major part of many web services. BlueEyes provides the `accepts`, `produces`, and `contentType` combinators to respectively filter incoming requests by the `Content-Type` they contain, ensure outgoing responses have a correct `Content-Type` header, and both filter incoming requests and set the `Content-Type` header on responses.
 
 All these combinators take a MIME type as an argument. In `blueeyes.core.http.MimeTypes._` a large number of MIME types are defined, so you can just write, say, `application/json` or `audio/mp3` or `application/pdf` for your MIME type. Note that main MIME types (`application`, `text`, and so on) are objects, with a `/` method that takes a subtype (`json`, `pdf`, and so on). Thus you can compose MIME types out of fragments if the need arises.
 
-A few examples are in order. To filter requests that accept `application/json` we can write
+A few examples are in order. To filter requests that contain `application/json` content we can write
 
 {% highlight scala %}
 accepts(application/json) {
@@ -192,12 +192,21 @@ accepts(application/json) {
 To ensure responses have a `Content-Type` header set to `text/html` the following suffices:
 
 {% highlight scala %}
-produces(text/xml) {
+produces(text/html) {
   // Do something
 }
 {% endhighlight %}
 
-To only accept connections with
+To both filter requests containing JSON content, and ensure responses have a `Content-Type` header set to `application/json` we would write
+
+{% highlight scala %}
+contentType(application/json) {
+  // Do something
+}
+{% endhighlight %}
+
+
+
 
 This combinator specifies that the service consumes *and* produces content of the given MIME type. Many common MIME types are bound to values, so you can write just, say, `application/json` rather than constructing a `MimeType` object yourself.
 
