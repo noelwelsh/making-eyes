@@ -5,15 +5,14 @@ title: Running Services
 
 ## Configuration
 
-Configuation is done via the context passed to service. This context (an instance of  `blueeyes.core.service.HttpServiceContext`) has a attribute called `config` which is an instance of a [Configgy](https://github.com/robey/configgy) `ConfigMap`.
+Configuation is done via the context passed to service. This context (an instance of  `blueeyes.core.service.HttpServiceContext`) has a attribute called `config` which is an instance of a [Configrity](https://github.com/paradigmatic/Configrity) `Configuration`.
 
-You can pass in a `--configFile` option on the command line, or construct a `ConfigMap` in code:
+You can pass in a `--configFile` option on the command line, or construct a `Configuration` in code:
 
 {% highlight scala %}
-import net.lag.configgy.Configgy
+import org.streum.configrity._
 
-Configgy.configure("/etc/my-service.conf")
-val config = Configgy.config
+val config = Configuration.load("/etc/my-service.conf")
 {% endhighlight %}
 
 
