@@ -13,6 +13,7 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
   "com.reportgrid" %% "blueeyes-core"  % "0.6.0-SNAPSHOT",
   "com.reportgrid" %% "blueeyes-mongo" % "0.6.0-SNAPSHOT",
-  "com.reportgrid" %% "blueeyes-json"  % "0.6.0-SNAPSHOT"
+  "com.reportgrid" %% "blueeyes-json"  % "0.6.0-SNAPSHOT",
+  "ch.qos.logback" % "logback-classic" % "1.0.0" % "runtime"
 )
 {% endhighlight scala %}
