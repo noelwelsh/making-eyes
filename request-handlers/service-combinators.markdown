@@ -5,7 +5,7 @@ title: Service Combinators
 
 Service combinators are filters that process a request and decide to continue processing or to reject the request. We'll discuss first how to use combinator, then the predefined combinators, and then how to build our own.
 
-### Using Combinators
+## Using Combinators
 
 All combinators follow the same pattern. If we want to take an action when a combinator matches, we nest that action inside the combinator. For example, to filter a path and then a `GET` request, we could write
 
@@ -40,11 +40,11 @@ path("/foo/baz") {
 }
 {% endhighlight %}
 
-### Predefined Combinators
+## Predefined Combinators
 
 BlueEyes predefined combinators are all provided by `blueeyes.core.service.HttpRequestHandlerCombinators`. `BlueEyesServiceBuilder` extends `HttpRequestHandlerCombinators`.
 
-#### HTTP Method
+### HTTP Method
 
 The most basic combinators match the HTTP request methods. There is a combinator for each HTTP method: `get`, `post`, `put`, `head`, `delete`, `patch`, `options`, `trace`, and `connect`. Their use is straightforward. For example, to match a `get` request:
 
@@ -54,7 +54,7 @@ get {
 }
 {% endhighlight %}
 
-#### Path
+### Path
 
 Almost all services will want to dispatch on the path of the request, and BlueEyes provides a flexible `path` combinator just for this case. The most basic usage is to match a literal path. For example, to match the path `/api/v1/login` we'd write
 
@@ -106,7 +106,7 @@ path("/extension/(?<extension>[0-9]{2})") {
 {% endhighlight %}
 
 
-#### Content Types
+### Content Types
 
 Handling content types is a major part of many web services. BlueEyes provides the `accepts`, `produces`, and `contentType` combinators to respectively filter incoming requests by the `Content-Type` they contain, ensure outgoing responses have a correct `Content-Type` header, and both filter incoming requests and set the `Content-Type` header on responses.
 
@@ -137,3 +137,5 @@ contentType(application/json) {
 {% endhighlight %}
 
 These combinators all have an implicit bijection parameter. The intention is to transcde the content to the apropriate type, but there is no association between the `MimeType` passed to the combinator and the bijection. This means, for example, you could specify `application/json` as the MIME type, but treat the content as XML. Since this is usually an error, two special purpose combinators are provided. `jvalue` and `xml` act like the `contentType` combinator but set the type of the bijection appropriately. You still need to make the correct bijection available to use these combinators.
+
+TODO: service, $, orFail, commit, compress, aggregate, jsonp

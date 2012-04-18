@@ -25,7 +25,7 @@ In summary:
 - Bijections such as `BijectionsChunkJson` and `BijectionsChunkFutureJson` provide functions to convert between `ByteChunk` and more useful types.
 - After converting a `ByteChunk` to a type `A`, a request will be of type `HttpRequest[Future[A]]`. A response will be of type `Future[HttpResponse[A]]`.
 
-### Using Bijections
+## Using Bijections
 
 Now let's look at how we use Bijections, first as an application developer where the service combinators take care of applying them, and then as a libary developer creating new service combinators.
 
