@@ -1,6 +1,6 @@
 ---
 layout: page
-titie: Running Services
+title: Running Services
 ---
 
 ## Configuration
