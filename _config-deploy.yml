@@ -1,4 +1,4 @@
 pygments: true
 permalink: /blog/:categories/:year/:month/:day/:title.html
 markdown: kramdown
-root: /
+root: /blueeyes

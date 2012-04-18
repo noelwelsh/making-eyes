@@ -7,9 +7,9 @@
     <meta name="description" content="A short book on the BlueEyes web framework">
     <meta name="author" content="Noel Welsh">
 
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
-    <link href="css/pygments.css" rel="stylesheet" type="text/css">
+    <link href="{{ site.root }}bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ site.root }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ site.root }}css/pygments.css" rel="stylesheet" type="text/css">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -75,10 +75,10 @@
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">
-        <a class="brand" href="index.html">The Lowdown on BlueEyes</a>
+        <a class="brand" href="{{ site.root }}index.html">The Lowdown on BlueEyes</a>
         <ul class="nav">
-          <li class="active"><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
+          <li class="active"><a href="{{ site.root }}index.html">Home</a></li>
+          <li><a href="{{ site.root }}about.html">About</a></li>
         </ul>
       </div>
     </div>

@@ -8,6 +8,8 @@
   '("intro.html"
     "setup.html"
     "request-handlers.html"
+    ("request-handlers/bijections.html"
+     "request-handlers/service-combinators.html")
     "running.html"
     "concurrency.html"
     "http-client.html"
@@ -28,7 +30,7 @@
   (define (build-item item)
     (cond
      [(string? item)
-      (printf "<li><a href=\"~a\">~a</a></li>\n" item (title item))]
+      (printf "<li><a href=\"{{ site.root }}~a\">~a</a></li>\n" item (title item))]
      [(pair? item)
       (build-toc item)]))
 
