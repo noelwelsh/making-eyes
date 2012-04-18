@@ -18,6 +18,7 @@ This book is still a work in progress, and all feedback is greatly appreciated!
 
 ## News
 
+- *0.3.3* Update many sections. Finish most of service combinators and most of concurrency
 - *0.3.2* Finish bijections section. Start on service combinators.
 - *0.3.1* Due to popular demand, donations are accepted on the [about](about.html) page.
 - *0.3* Start on Request Handler chapter. Cover bijections.
