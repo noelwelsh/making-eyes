@@ -7,7 +7,8 @@ Setting up a BlueEyes project using SBT just requires adding ReportGrid's reposi
 
 {% highlight scala %}
 resolvers ++= Seq(
-  "ReportGrid"  at "http://nexus.reportgrid.com/content/repositories/public-snapshots"
+  "ReportGrid"  at "http://nexus.reportgrid.com/content/repositories/public-snapshots",
+  "Typesafe"    at "http://repo.typesafe.com/typesafe/releases/"
 )
 
 libraryDependencies ++= Seq(

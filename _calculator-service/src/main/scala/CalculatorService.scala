@@ -1,5 +1,5 @@
 import akka.dispatch.Future
-import blueeyes.BlueEyesServiceBuilder
+import blueeyes.{BlueEyesServiceBuilder, BlueEyesServer}
 import blueeyes.core.http.{HttpRequest, HttpResponse, HttpStatus}
 import blueeyes.core.http.HttpStatusCodes._
 import blueeyes.core.data.{ByteChunk, BijectionsChunkString}
@@ -52,3 +52,5 @@ trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkStrin
       }
   }
 }
+
+object CalculatorServer extends BlueEyesServer with CalculatorService

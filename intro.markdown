@@ -328,7 +328,16 @@ A server has `start` and `stop` methods, and a `main` method. By default the `ma
 Most environments provide some way to run a class with a `main` method. You can use this to test your server. For example, from within `sbt` you issue the command
 
 {% highlight bash %}
-> run CalculatorService --configFile /path/to/test.config
+> run CalculatorServer --configFile /path/to/example.config
+{% endhighlight %}
+
+This requires a configuration file, so we've prepared [an example](https://github.com/noelwelsh/making-eyes/tree/master/_calculator-service/example.config) configuration file for you.
+
+Once the server is started you can interact with it via a web browser or using `curl` for example:
+
+{% highlight bash %}
+> curl http://localhost:8080/add/1/2
+3
 {% endhighlight %}
 
 In a [later section](running.html) we'll talk about how to package your complete service into one JAR file that you can upload to a production server.
