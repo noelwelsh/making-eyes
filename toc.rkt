@@ -24,15 +24,15 @@
 
 (define (make-toc toc)
   (define (build-toc toc)
-    (displayln "<ul>")
-    (map build-item toc)
-    (displayln "</ul>"))
+    (for-each build-item toc))
   (define (build-item item)
     (cond
      [(string? item)
       (printf "<li><a href=\"{{ site.root }}~a\">~a</a></li>\n" item (title item))]
      [(pair? item)
-      (build-toc item)]))
+      (displayln "<ul>")
+      (build-toc item)
+      (displayln "</ul>")]))
 
   (with-output-to-file toc-file-name
     (lambda () (build-toc toc))

@@ -10,6 +10,8 @@
     <link href="{{ site.root }}bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="{{ site.root }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
     <link href="{{ site.root }}css/pygments.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ site.root }}js/contents.js"></script>
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -87,7 +89,7 @@
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span3">
-        <div class="well sidebar-nav">
+        <div id="navbar" class="well sidebar-nav">
           <ul class="nav nav-list">
             <li class="nav-header">Contents</li>
             {% include toc.html %}
