@@ -11,11 +11,12 @@ function toLink(elt) {
 }
 
 $(function() {
-  var headings = toList($('h2'), function(h2) {
-    return toLink(h2) + "<ul>" + toList($(h2).nextUntil('h2').filter('h3'), function(elt) {
-      return toLink(elt);
-    }) + "</ul>";
-  });
+  var headings = toList($("h1"), function(elt) { return toLink(elt) }) +
+    toList($('h2'), function(h2) {
+      return toLink(h2) + "<ul>" + toList($(h2).nextUntil('h2').filter('h3'), function(elt) {
+        return toLink(elt);
+      }) + "</ul>";
+    });
 
   $('#navbar').append('<ul class="nav nav-list"><li class="nav-header">On This Page</li>' + headings + '</ul>')
 });
