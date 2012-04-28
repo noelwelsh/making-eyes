@@ -316,7 +316,7 @@ trait CalculatorService extends BlueEyesServiceBuilder with BijectionsChunkStrin
 A *server* is the software process that runs one or more services. To actually execute our calculator service we must build a server to run it. BlueEyes makes this very simple: simply extend the `BlueEyesServer` trait and mix in the traits defining the service:
 
 {% highlight scala %}
-import BlueEyes.BlueEyesServer
+import blueeyes.BlueEyesServer
 
 object CalculatorServer extends BlueEyesServer with CalculatorService
 {% endhighlight %}
