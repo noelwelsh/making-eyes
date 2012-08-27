@@ -7,14 +7,14 @@ Setting up a BlueEyes project using SBT just requires adding ReportGrid's reposi
 
 {% highlight scala %}
 resolvers ++= Seq(
-  "ReportGrid"  at "http://nexus.reportgrid.com/content/repositories/public-snapshots",
+  "ReportGrid"  at "http://nexus.reportgrid.com/content/repositories/public",
   "Typesafe"    at "http://repo.typesafe.com/typesafe/releases/"
 )
 
 libraryDependencies ++= Seq(
-  "com.reportgrid" %% "blueeyes-core"  % "0.6.0-SNAPSHOT",
-  "com.reportgrid" %% "blueeyes-mongo" % "0.6.0-SNAPSHOT",
-  "com.reportgrid" %% "blueeyes-json"  % "0.6.0-SNAPSHOT",
+  "com.github.jdegoes" %% "blueeyes-core"  % "0.6.0",
+  "com.github.jdegoes" %% "blueeyes-mongo" % "0.6.0",
+  "com.github.jdegoes" %% "blueeyes-json"  % "0.6.0",
   "ch.qos.logback" % "logback-classic" % "1.0.0" % "runtime"
 )
 {% endhighlight scala %}
